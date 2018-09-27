@@ -7,13 +7,13 @@ import (
 	"log"
 )
 
-func getApiRootMailChimp(apiKey string) (apiUrl string) {
+func GetApiRootMailChimp(apiKey string) (apiUrl string) {
 	s := strings.Split(apiKey, "-")
 	apiUrl = "https://" + s[1] + ".api.mailchimp.com/3.0/"
 	return
 }
 
-func makeReq(apiKey string, apiRoot string, endPoint string) (result []byte) {
+func MakeReq(apiKey string, apiRoot string, endPoint string) (result []byte) {
 	client := &http.Client{}
 	apiUrl := apiRoot + endPoint
 

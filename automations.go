@@ -124,25 +124,25 @@ type AutomationReponse struct {
 	Links       interface{}  `json:"_links"`
 }
 
-func getAllAutomations(apiRoot, apiKey string) (automations AutomationReponse) {
+func GetAllAutomations(apiRoot, apiKey string) (automations AutomationReponse) {
 	endPoint := "automations"
-	response := makeReq(apiKey, apiRoot, endPoint)
+	response := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(response, &automations)
 	return
 }
 
 
-func getAutomation(automationId, apiRoot, apiKey string) (automation Automation) {
+func GetAutomation(automationId, apiRoot, apiKey string) (automation Automation) {
 	endPoint := "automations/" + automationId
-	report := makeReq(apiKey, apiRoot, endPoint)
+	report := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(report, &automation)
 	return automation
 }
 
 
-func getAutomationEmails(automationId, apiRoot, apiKey string) (aReport AutomationEmailResponse) {
+func GetAutomationEmails(automationId, apiRoot, apiKey string) (aReport AutomationEmailResponse) {
 	endPoint := "automations/" + automationId + "/emails?count=100"
-	report := makeReq(apiKey, apiRoot, endPoint)
+	report := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(report, &aReport)
 	return aReport
 }

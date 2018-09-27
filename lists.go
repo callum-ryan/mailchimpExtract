@@ -70,17 +70,17 @@ type ContactInfo struct {
 }
 
 
-func getLists(apiKey, apiRoot string) (lists ListsResponse) {
+func GetLists(apiKey, apiRoot string) (lists ListsResponse) {
 	endPoint := "lists"
-	response := makeReq(apiKey, apiRoot, endPoint)
+	response := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(response, &lists)
 	return
 }
 
 
-func getList(apiKey, apiRoot, listId string) (list List) {
+func GetList(apiKey, apiRoot, listId string) (list List) {
 	endPoint := "lists/" + listId
-	response := makeReq(apiKey, apiRoot, endPoint)
+	response := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(response, &list)
 	return
 }

@@ -26,16 +26,16 @@ type SegmentOptions struct {
 	Conditions interface{} `json:"conditions"`
 }
 
-func getListSegments(apiKey, apiRoot, listId string) (segments SegmentsReponse) {
+func GetListSegments(apiKey, apiRoot, listId string) (segments SegmentsReponse) {
 	endPoint := "lists/" + listId + "/segments"
-	response := makeReq(apiKey, apiRoot, endPoint)
+	response := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(response, &segments)
 	return
 }
 
-func getSpecificSegment(apiKey, apiRoot, listId, segmentId string) (segment Segment) {
+func GetSpecificSegment(apiKey, apiRoot, listId, segmentId string) (segment Segment) {
 	endPoint := "lists/" + listId + "/segments/" + segmentId
-	response := makeReq(apiKey, apiRoot, endPoint)
+	response := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(response, &segment)
 	return
 }
