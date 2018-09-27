@@ -77,6 +77,7 @@ func getLists(apiKey, apiRoot string) (lists ListsResponse) {
 	return
 }
 
+
 func getList(apiKey, apiRoot, listId string) (list List) {
 	endPoint := "lists/" + listId
 	response := makeReq(apiKey, apiRoot, endPoint)

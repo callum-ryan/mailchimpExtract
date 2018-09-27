@@ -1,5 +1,7 @@
 package mailchimpExtract
 
+import "encoding/json"
+
 type SegmentsReponse struct {
 	Segments   []Segment   `json:"segments"`
 	ListId     string      `json:"list_id"`
@@ -22,4 +24,18 @@ type Segment struct {
 type SegmentOptions struct {
 	Match      string      `json:"match"`
 	Conditions interface{} `json:"conditions"`
+}
+
+func getListSegments(apiKey, apiRoot, listId string) (segments SegmentsReponse) {
+	endPoint := "lists/" + listId + "/segments"
+	response := makeReq(apiKey, apiRoot, endPoint)
+	json.Unmarshal(response, &segments)
+	return
+}
+
+func getSpecificSegment(apiKey, apiRoot, listId, segmentId string) (segment Segment) {
+	endPoint := "lists/" + listId + "/segments/" + segmentId
+	response := makeReq(apiKey, apiRoot, endPoint)
+	json.Unmarshal(response, &segment)
+	return
 }
