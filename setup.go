@@ -7,12 +7,6 @@ import (
 	"log"
 )
 
-func main() {
-	apiKey := ""
-	apiUrl := getApiRootMailChimp(apiKey)
-
-}
-
 func getApiRootMailChimp(apiKey string) (apiUrl string) {
 	s := strings.Split(apiKey, "-")
 	apiUrl = "https://" + s[1] + ".api.mailchimp.com/3.0/"
