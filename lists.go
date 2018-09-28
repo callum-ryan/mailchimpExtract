@@ -12,7 +12,7 @@ type List struct {
 	Id                   string           `json:"id"`
 	WebId                int              `json:"web_id"`
 	Name                 string           `json:"name"`
-	Contact              interface{}      `json:"contact"`
+	Contact              ContactInfo      `json:"contact"`
 	PermissionReminder   string           `json:"permission_reminder"`
 	UseArchiveBar        bool             `json:"use_archive_bar"`
 	CampaignDefaults     CampaignDefaults `json:"campaign_defaults"`
@@ -70,7 +70,7 @@ type ContactInfo struct {
 }
 
 
-func GetLists(apiKey, apiRoot string) (lists ListsResponse) {
+func GetLists(apiRoot, apiKey string) (lists ListsResponse) {
 	endPoint := "lists"
 	response := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(response, &lists)
@@ -78,7 +78,7 @@ func GetLists(apiKey, apiRoot string) (lists ListsResponse) {
 }
 
 
-func GetList(apiKey, apiRoot, listId string) (list List) {
+func GetList(apiRoot, apiKey, listId string) (list List) {
 	endPoint := "lists/" + listId
 	response := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(response, &list)

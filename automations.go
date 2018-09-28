@@ -5,7 +5,11 @@ import (
 )
 
 // AutomationResponse is the struct returned when calling automations/automation_id
-
+type AutomationReponse struct {
+	Automations []Automation `json:"automations"`
+	TotalItems  int          `json:"total_items"`
+	Links       interface{}  `json:"_links"`
+}
 type Automation struct {
 	Id              string               `json:"id"`
 	CreateTime      string               `json:"create_time"`
@@ -78,7 +82,7 @@ type AutomationEmail struct {
 	WebId             int                       `json:"web_id"`
 	WorkflowId        string                    `json:"workflow_id"`
 	Position          int                       `json:"position"`
-	Delay             interface{}               `json:"delay"`
+	Delay             AutomationDelay           `json:"delay"`
 	CreateTime        string                    `json:"create_time"`
 	StartTime         string                    `json:"start_time"`
 	ArchiveUrl        string                    `json:"archive_url"`
@@ -94,6 +98,15 @@ type AutomationEmail struct {
 	TriggerSettings   interface{}               `json:"trigger_settings"`
 	ReportSummary     ReportSummary             `json:"report_summary"`
 	Links             interface{}               `json:"_links"`
+}
+
+type AutomationDelay struct {
+	Amount            int    `json:"amount"`
+	Type              string `json:"type"`
+	Direction         string `json:"direction"`
+	Action            string `json:"action"`
+	ActionDescription string `json:"action_description"`
+	FullDescription   string `json:"full_description"`
 }
 
 type AutomationEmailRecipients struct {
@@ -118,19 +131,12 @@ type AutomationEmailSettings struct {
 	DragAndDrop  bool        `json:"drag_and_drop"`
 }
 
-type AutomationReponse struct {
-	Automations []Automation `json:"automations"`
-	TotalItems  int          `json:"total_items"`
-	Links       interface{}  `json:"_links"`
-}
-
 func GetAllAutomations(apiRoot, apiKey string) (automations AutomationReponse) {
-	endPoint := "automations"
+	endPoint := "automations?count=2000"
 	response := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(response, &automations)
 	return
 }
-
 
 func GetAutomation(automationId, apiRoot, apiKey string) (automation Automation) {
 	endPoint := "automations/" + automationId
@@ -139,9 +145,8 @@ func GetAutomation(automationId, apiRoot, apiKey string) (automation Automation)
 	return automation
 }
 
-
 func GetAutomationEmails(automationId, apiRoot, apiKey string) (aReport AutomationEmailResponse) {
-	endPoint := "automations/" + automationId + "/emails?count=100"
+	endPoint := "automations/" + automationId + "/emails?count=2000"
 	report := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(report, &aReport)
 	return aReport
