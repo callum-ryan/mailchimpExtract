@@ -87,5 +87,13 @@ func GetMemberActivity(apiRoot, apiKey, listId, subscriberHash string) (activiti
 	endPoint := "lists/" + listId + "/members/" + subscriberHash + "/activity"
 	report := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(report, &activities)
-	return activities
+	return
+}
+
+func GetMembers(apiRoot, apiKey, listId string) (members MembersResponse) {
+	//GET /lists/{list_id}/members
+	endPoint := "lists/" + listId + "/members"
+	report := MakeReq(apiKey, apiRoot, endPoint)
+	json.Unmarshal(report, &members)
+	return
 }

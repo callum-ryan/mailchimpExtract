@@ -28,12 +28,19 @@ type Campaign struct {
 }
 
 type CampaignRecipients struct {
-	ListId         string      `json:"list_id"`
-	ListIsActive   bool        `json:"list_is_active"`
-	ListName       string      `json:"list_name"`
-	SegmentText    string      `json:"segment_text"`
-	RecipientCount int         `json:"recipient_count"`
-	SegmentOpts    interface{} `json:"segment_opts"`
+	ListId         string              `json:"list_id"`
+	ListIsActive   bool                `json:"list_is_active"`
+	ListName       string              `json:"list_name"`
+	SegmentText    string              `json:"segment_text"`
+	RecipientCount int                 `json:"recipient_count"`
+	SegmentOpts    CampaignSegmentOpts `json:"segment_opts"`
+}
+
+type CampaignSegmentOpts struct {
+	SavedSegmentId    int         `json:"saved_segment_id"`
+	PrebuiltSegmentId string      `json:"prebuilt_segment_id"`
+	Match             string      `json:"match"`
+	Conditions        interface{} `json:"conditions"`
 }
 
 type CampaignSettings struct {
