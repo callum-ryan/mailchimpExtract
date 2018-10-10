@@ -13,7 +13,7 @@ func GetApiRootMailChimp(apiKey string) (apiUrl string) {
 	return
 }
 
-func MakeReq(apiKey string, apiRoot string, endPoint string) (result []byte) {
+func MakeReq(apiKey string, apiRoot string, endPoint string) ([]byte) {
 	client := &http.Client{}
 	apiUrl := apiRoot + endPoint
 

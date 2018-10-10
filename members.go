@@ -1,6 +1,8 @@
 package mailchimpExtract
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type MembersResponse struct {
 	Members    []Member    `json:"members"`
@@ -82,8 +84,7 @@ type Activity struct {
 	ParentCampaign string `json:"parent_campaign"`
 }
 
-
-func GetMemberActivity(apiRoot, apiKey, listId, subscriberHash string) (activities ActivityResponse){
+func GetMemberActivity(apiRoot, apiKey, listId, subscriberHash string) (activities ActivityResponse) {
 	endPoint := "lists/" + listId + "/members/" + subscriberHash + "/activity"
 	report := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(report, &activities)
@@ -92,8 +93,41 @@ func GetMemberActivity(apiRoot, apiKey, listId, subscriberHash string) (activiti
 
 func GetMembers(apiRoot, apiKey, listId string) (members MembersResponse) {
 	//GET /lists/{list_id}/members
-	endPoint := "lists/" + listId + "/members"
+	// TODO: Pagination of members list for loading
+	// Activity updates will have to be a full list scrape?
+	// BatchReq everything?
+	endPoint := "lists/" + listId + "/members?count=100"
 	report := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(report, &members)
 	return
+}
+
+func BuildBatchActivity(listId string, subscriberHashes []string) ([]byte) {
+	var batchReq BatchRequest
+	var i interface{}
+	for _, v := range subscriberHashes {
+		batchReq.Operations = append(batchReq.Operations, BatchOperation{
+			"GET",
+			"lists/" + listId + "/members/" + v + "/activity",
+			i,
+			"",
+			"",
+		})
+	}
+	bytesReq, _ := json.Marshal(batchReq)
+	return bytesReq
+}
+
+func BuildBatchMembers(listId string) ([]byte) {
+	var batchReq BatchRequest
+	var i interface{}
+	batchReq.Operations = append(batchReq.Operations, BatchOperation{
+		"GET",
+		"lists/" + listId + "/members",
+		i,
+		"",
+		"",
+	})
+	bytesReq, _ := json.Marshal(batchReq)
+	return bytesReq
 }
