@@ -8,7 +8,7 @@ import (
 	"encoding/json"
 )
 
-type BatchReponse struct {
+type BatchResponse struct {
 	Id                 string      `json:"id"`
 	Status             string      `json:"status"`
 	TotalOperations    int         `json:"total_operations"`
@@ -32,7 +32,7 @@ type BatchOperation struct {
 	OperationId string      `json:"operation_id,omitempty" bson:"omitempty"`
 }
 
-func MakeBatchReq(apiKey, apiRoot string, requestBody []byte) (BatchReponse) {
+func MakeBatchReq(apiKey, apiRoot string, requestBody []byte) (BatchResponse) {
 	client := &http.Client{}
 	apiUrl := apiRoot + "batches/"
 	req, err := http.NewRequest("POST", apiUrl, bytes.NewBuffer(requestBody))
@@ -42,7 +42,7 @@ func MakeBatchReq(apiKey, apiRoot string, requestBody []byte) (BatchReponse) {
 		log.Fatalln(err)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
-	var batchResponse BatchReponse
+	var batchResponse BatchResponse
 	json.Unmarshal(body, &batchResponse)
 	return batchResponse
 }

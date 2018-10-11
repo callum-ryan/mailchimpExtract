@@ -94,8 +94,8 @@ func GetMemberActivity(apiRoot, apiKey, listId, subscriberHash string) (activiti
 func GetMembers(apiRoot, apiKey, listId string) (members MembersResponse) {
 	//GET /lists/{list_id}/members
 	// TODO: Pagination of members list for loading
-	// Activity updates will have to be a full list scrape?
-	// BatchReq everything?
+	// Activity updates will have to be a full list scrape? Yes.
+	// BatchReq everything? Yes.
 	endPoint := "lists/" + listId + "/members?count=100"
 	report := MakeReq(apiKey, apiRoot, endPoint)
 	json.Unmarshal(report, &members)
